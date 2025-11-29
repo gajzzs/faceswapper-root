@@ -47,7 +47,7 @@ def parse_args() -> None:
     program.add_argument('--max-memory', help='maximum amount of RAM in GB', dest='max_memory', type=int)
     program.add_argument('--execution-provider', help='available execution provider (choices: cpu, ...)', dest='execution_provider', default=['cpu'], choices=suggest_execution_providers(), nargs='+')
     program.add_argument('--execution-threads', help='number of execution threads', dest='execution_threads', type=int, default=suggest_execution_threads())
-    program.add_argument('--face-swap-model', help='face swap model (choices: hyperswap, inswapper)', dest='face_swap_model', default='hyperswap', choices=['hyperswap', 'inswapper'])
+    program.add_argument('--face-swap-model', help='face swap model (choices: inswapper)', dest='face_swap_model', default='inswapper', choices=['inswapper'])
     program.add_argument('-v', '--version', action='version', version=f'{roop.metadata.name} {roop.metadata.version}')
 
     args = program.parse_args()
