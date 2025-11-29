@@ -19,4 +19,5 @@ output_video_quality: Optional[int] = None
 max_memory: Optional[int] = None
 execution_providers: List[str] = []
 execution_threads: Optional[int] = None
+face_swap_model: Optional[str] = None
 log_level: str = 'error'

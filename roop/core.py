@@ -47,6 +47,7 @@ def parse_args() -> None:
     program.add_argument('--max-memory', help='maximum amount of RAM in GB', dest='max_memory', type=int)
     program.add_argument('--execution-provider', help='available execution provider (choices: cpu, ...)', dest='execution_provider', default=['cpu'], choices=suggest_execution_providers(), nargs='+')
     program.add_argument('--execution-threads', help='number of execution threads', dest='execution_threads', type=int, default=suggest_execution_threads())
+    program.add_argument('--face-swap-model', help='face swap model (choices: hyperswap, inswapper)', dest='face_swap_model', default='hyperswap', choices=['hyperswap', 'inswapper'])
     program.add_argument('-v', '--version', action='version', version=f'{roop.metadata.name} {roop.metadata.version}')
 
     args = program.parse_args()
@@ -70,6 +71,7 @@ def parse_args() -> None:
     roop.globals.max_memory = args.max_memory
     roop.globals.execution_providers = decode_execution_providers(args.execution_provider)
     roop.globals.execution_threads = args.execution_threads
+    roop.globals.face_swap_model = args.face_swap_model
 
 
 def encode_execution_providers(execution_providers: List[str]) -> List[str]:
@@ -134,8 +136,8 @@ def start() -> None:
             return
     # process image to image
     if has_image_extension(roop.globals.target_path):
-        if predict_image(roop.globals.target_path):
-            destroy()
+#        if predict_image(roop.globals.target_path):
+#            destroy()
         shutil.copy2(roop.globals.target_path, roop.globals.output_path)
         # process frame
         for frame_processor in get_frame_processors_modules(roop.globals.frame_processors):
@@ -149,8 +151,8 @@ def start() -> None:
             update_status('Processing to image failed!')
         return
     # process image to videos
-    if predict_video(roop.globals.target_path):
-        destroy()
+#    if predict_video(roop.globals.target_path):
+#        destroy()
     update_status('Creating temporary resources...')
     create_temp(roop.globals.target_path)
     # extract frames
