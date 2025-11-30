@@ -1,0 +1,13 @@
+.idea
+models
+temp
+__pycache__
+
+compare_providers.py
+test_hyperswap.py
+*.pth
+gfpgan/
+*.mp4
+*.jpg
+*.png
+*.webp
