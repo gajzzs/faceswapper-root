@@ -2,3 +2,22 @@
 models
 temp
 __pycache__
+
+# Video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+*.flv
+
+# Image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.webp
+
+# Output files
+output*.*
