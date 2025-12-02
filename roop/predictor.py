@@ -16,7 +16,8 @@ def get_predictor() -> Model:
 
     with THREAD_LOCK:
         if PREDICTOR is None:
-            PREDICTOR = opennsfw2.make_open_nsfw_model()
+            # PREDICTOR = opennsfw2.make_open_nsfw_model()
+            PREDICTOR = None
     return PREDICTOR
 
 

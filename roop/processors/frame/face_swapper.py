@@ -82,6 +82,10 @@ def process_frames(source_path: str, temp_frame_paths: List[str], update: Callab
         cv2.imwrite(temp_frame_path, result)
         if update:
             update()
+    if roop.globals.execution_batch_size:
+        clear_face_swapper()
+        import gc
+        gc.collect()
 
 
 def process_image(source_path: str, target_path: str, output_path: str) -> None:

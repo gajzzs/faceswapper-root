@@ -17,7 +17,7 @@ import onnxruntime
 import tensorflow
 import roop.globals
 import roop.metadata
-import roop.ui as ui
+import roop.ui_gradio as ui
 from roop.predictor import predict_image, predict_video
 from roop.processors.frame.core import get_frame_processors_modules
 from roop.utilities import has_image_extension, is_image, is_video, detect_fps, create_video, extract_frames, get_temp_frame_paths, restore_audio, create_temp, move_temp, clean_temp, normalize_output_path
@@ -47,7 +47,9 @@ def parse_args() -> None:
     program.add_argument('--max-memory', help='maximum amount of RAM in GB', dest='max_memory', type=int)
     program.add_argument('--execution-provider', help='available execution provider (choices: cpu, ...)', dest='execution_provider', default=['cpu'], choices=suggest_execution_providers(), nargs='+')
     program.add_argument('--execution-threads', help='number of execution threads', dest='execution_threads', type=int, default=suggest_execution_threads())
+    program.add_argument('--execution-batch-size', help='number of frames per batch', dest='execution_batch_size', type=int, default=10)
     program.add_argument('--face-swap-model', help='face swap model (choices: inswapper)', dest='face_swap_model', default='inswapper', choices=['inswapper'])
+    program.add_argument('--share', help='share the gradio ui', dest='share', action='store_true')
     program.add_argument('-v', '--version', action='version', version=f'{roop.metadata.name} {roop.metadata.version}')
 
     args = program.parse_args()
@@ -71,7 +73,9 @@ def parse_args() -> None:
     roop.globals.max_memory = args.max_memory
     roop.globals.execution_providers = decode_execution_providers(args.execution_provider)
     roop.globals.execution_threads = args.execution_threads
+    roop.globals.execution_batch_size = args.execution_batch_size
     roop.globals.face_swap_model = args.face_swap_model
+    roop.globals.share = args.share
 
 
 def encode_execution_providers(execution_providers: List[str]) -> List[str]:
@@ -218,5 +222,4 @@ def run() -> None:
     if roop.globals.headless:
         start()
     else:
-        window = ui.init(start, destroy)
-        window.mainloop()
+        ui.init(start, destroy)

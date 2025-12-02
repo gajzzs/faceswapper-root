@@ -50,6 +50,8 @@ def multi_process_frame(source_path: str, temp_frame_paths: List[str], process_f
         futures = []
         queue = create_queue(temp_frame_paths)
         queue_per_future = max(len(temp_frame_paths) // roop.globals.execution_threads, 1)
+        if roop.globals.execution_batch_size:
+            queue_per_future = roop.globals.execution_batch_size
         while not queue.empty():
             future = executor.submit(process_frames, source_path, pick_queue(queue, queue_per_future), update)
             futures.append(future)
